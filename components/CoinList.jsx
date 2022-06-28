@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -16,6 +16,8 @@ export default function CoinList({
   onEndReached,
   onItemPress,
 }) {
+  const flatListRef = useRef(null);
+
   function RenderItem({ item }) {
     return (
       <TouchableOpacity onPress={() => onItemPress(item)}>
@@ -28,12 +30,16 @@ export default function CoinList({
               } (${item.symbol?.toUpperCase()})`}</Text>
               <Text style={styles.itemPrice}>{`€${item.current_price}`}</Text>
             </View>
-            <Text
-              style={styles.itemPastPrice}
-            >{`24H HIGH: €${item.high_24h}`}</Text>
-            <Text
-              style={styles.itemPastPrice}
-            >{`24H LOW: €${item.low_24h}`}</Text>
+            <View flexDirection="row">
+              <View marginRight={5}>
+                <Text style={styles.itemPastPrice}>24H HIGH:</Text>
+                <Text style={styles.itemPastPrice}>24H LOW:</Text>
+              </View>
+              <View>
+                <Text style={styles.itemPastPrice}>{`€${item.high_24h}`}</Text>
+                <Text style={styles.itemPastPrice}>{`€${item.low_24h}`}</Text>
+              </View>
+            </View>
           </View>
         </View>
       </TouchableOpacity>
@@ -50,13 +56,14 @@ export default function CoinList({
 
   return (
     <FlatList
+      ref={flatListRef}
       data={coins}
       renderItem={RenderItem}
       keyExtractor={(item) => item.id}
       ListHeaderComponent={Logo}
       ListFooterComponent={RenderLoader}
       onEndReached={onEndReached}
-      onEndReachedThreshold={20}
+      onEndReachedThreshold={1}
       showsVerticalScrollIndicator={false}
     />
   );
@@ -69,6 +76,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#ddd",
     paddingVertical: 10,
+    alignItems: "center",
   },
   itemImage: {
     width: 70,
