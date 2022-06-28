@@ -11,12 +11,15 @@ export default function App() {
     <SafeAreaView style={styles.safeAreaContainer}>
       <NavigationContainer>
         <Stack.Navigator>
+          <Stack.Screen name="Home" component={Home} />
           <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{ headerShown: false }}
+            name="CryptoItem"
+            component={CryptoItem}
+            options={{
+              headerTitle: "",
+              headerTintColor: "#3f3f40",
+            }}
           />
-          <Stack.Screen name="CryptoItem" component={CryptoItem} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
