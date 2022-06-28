@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { HeaderTitle } from "../components";
 
-export default function CryptoItem({ navigation }) {
+export default function CryptoItem({ route, navigation }) {
+  const { id, image, name } = route.params;
+
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: () => <Text>This is some text</Text>,
+      headerTitle: () => <HeaderTitle title={name} image={image} />,
     });
   }, []);
 

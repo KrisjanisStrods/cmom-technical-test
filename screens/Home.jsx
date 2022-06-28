@@ -14,7 +14,11 @@ export default function Home({ navigation }) {
         isLoading={isLoading}
         onEndReached={() => setCurrentPage((p) => p + 1)}
         onItemPress={(item) =>
-          navigation.navigate("CryptoItem", { id: item.id })
+          navigation.navigate("CryptoItem", {
+            id: item.id,
+            image: item.image,
+            name: item.name,
+          })
         }
       />
     </View>
