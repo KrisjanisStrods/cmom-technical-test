@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { CoinList } from "../components";
 import { useGeckoMarkets } from "../Hooks";
@@ -7,8 +7,8 @@ export default function Home({ navigation }) {
   const [currentPage, setCurrentPage] = useState(1);
   const { coins, isLoading } = useGeckoMarkets(currentPage);
 
-  return (
-    <View style={styles.container}>
+  const MemoizedCoinList = useMemo(() => {
+    return (
       <CoinList
         coins={coins}
         isLoading={isLoading}
@@ -21,8 +21,10 @@ export default function Home({ navigation }) {
           })
         }
       />
-    </View>
-  );
+    );
+  }, [coins]);
+
+  return <View style={styles.container}>{MemoizedCoinList}</View>;
 }
 
 const styles = StyleSheet.create({
